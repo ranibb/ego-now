@@ -1,0 +1,47 @@
+@import '../node_modules/@angular/material/theming.scss'; // importing angular/material/_theming.scss
+
+// Include non-theme styles for core.
+@include mat-core();
+
+$mat-ego-now: (
+  50 : #e0f5fe,
+  100 : #b3e6fe,
+  200 : #80d6fd,
+  300 : #4dc5fc,
+  400 : #26b8fb,
+  500 : #00acfa,
+  600 : #00a5f9,
+  700 : #009bf9,
+  800 : #0092f8,
+  900 : #0082f6,
+  A100 : #ffffff,
+  A200 : #eaf4ff,
+  A400 : #b7d9ff,
+  A700 : #9dccff,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+// Define a theme.
+$primary: mat-palette($mat-ego-now);
+$accent:  mat-palette($mat-pink, A200, A100, A400);
+
+$theme: mat-light-theme($primary, $accent);
+// $theme: mat-dark-theme($primary, $accent);
+
+// Include all theme styles for the components.
+@include angular-material-theme($theme);

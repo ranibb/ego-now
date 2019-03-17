@@ -1,0 +1,13 @@
+table {
+  width: 100%;
+}
+
+.spinner-container {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+}
+
+.spinner-container mat-spinner {
+  margin: 130px auto 0 auto;
+}

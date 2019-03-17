@@ -1,0 +1,58 @@
+<div class="spinner-container" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+</div>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!-- Driver ID Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> Driver ID </th>
+    <td mat-cell *matCellDef="let driver"> {{driver.id}} </td>
+  </ng-container>
+
+  <!-- Full Name Column -->
+  <ng-container matColumnDef="fullName">
+    <th mat-header-cell *matHeaderCellDef> Full name </th>
+    <td mat-cell *matCellDef="let driver"> {{driver.firstName}} {{driver.lastName}}</td>
+  </ng-container>
+
+  <!-- Phone Number Column -->
+  <ng-container matColumnDef="phone">
+    <th mat-header-cell *matHeaderCellDef> Phone number </th>
+    <td mat-cell *matCellDef="let driver"> {{driver.phone}} </td>
+  </ng-container>
+
+  <!-- Acount Creation Date Column -->
+  <ng-container matColumnDef="createdAt">
+    <th mat-header-cell *matHeaderCellDef> Acount creation date </th>
+    <td mat-cell *matCellDef="let driver"> {{driver.createdAt}} </td>
+  </ng-container>
+
+  <!-- Current Status Column -->
+  <ng-container matColumnDef="currentStatus">
+    <th mat-header-cell *matHeaderCellDef> Current status </th>
+    <td mat-cell *matCellDef="let driver"> {{driver.currentStatus}} </td>
+  </ng-container>
+
+  <!-- Last Driver Vehicle Column -->
+  <ng-container matColumnDef="lastVehicleDisplay">
+    <th mat-header-cell *matHeaderCellDef> Last driver vehicle </th>
+    <td mat-cell *matCellDef="let driver"> {{driver.lastVehicleDisplay}} </td>
+  </ng-container>
+
+  <!-- Balance Column -->
+  <ng-container matColumnDef="balance">
+    <th mat-header-cell *matHeaderCellDef> Balance </th>
+    <td mat-cell *matCellDef="let driver"> {{driver.balance}} </td>
+  </ng-container>
+
+  <!-- Rating Column -->
+  <ng-container matColumnDef="ratingsAvg">
+    <th mat-header-cell *matHeaderCellDef> Rating </th>
+    <td mat-cell *matCellDef="let driver"> {{driver.ratingsAvg}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
