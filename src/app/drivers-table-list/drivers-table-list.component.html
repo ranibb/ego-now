@@ -1,7 +1,7 @@
-<div class="spinner-container" *ngIf="loading">
+<div class="spinner-container" *ngIf="dataSource.loading$ | async">
     <mat-spinner></mat-spinner>
 </div>
-
+<app-drivers-table-filters></app-drivers-table-filters>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
   <!-- Driver ID Column -->

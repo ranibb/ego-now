@@ -1,0 +1,39 @@
+:host{
+  display: block;
+  margin-bottom: 13px;
+}
+
+.icon {
+  padding: 0 14px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+mat-divider {
+  border-top-width: 1.5px;
+}
+
+mat-toolbar.filters {
+  height: 49px;
+}
+
+mat-toolbar.refiners {
+  height: 43px;
+}
+
+mat-divider.style-fix {
+  height: 36px;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.ratingsAv {
+  width: 30px;
+  text-align: center;
+}
+
+.rangeTo {
+  margin: 0 5px;
+}

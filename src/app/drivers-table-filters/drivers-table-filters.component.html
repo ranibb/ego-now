@@ -1,0 +1,31 @@
+<div class="basic-container">
+  <mat-toolbar class="filters">
+    <span>Filters go here...</span>
+  </mat-toolbar>
+  <mat-divider></mat-divider>
+  <mat-toolbar class="refiners">
+    <button mat-icon-button>
+      <img src="../../assets/images/icons/assetSettingsButton.svg" alt="settings">
+    </button>
+    <mat-form-field floatLabel="never">
+      <mat-select placeholder="Driver status" [formControl]="driverStatus">
+        <mat-option value="">Driver status</mat-option>
+        <mat-option value="active">Active</mat-option>
+        <mat-option value="registration-vehicle">Registration Vehicle</mat-option>
+        <mat-option value="registration-uploads">Registration Uploads</mat-option>
+        <mat-option value="on-duty">On Duty</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-divider class="style-fix" [vertical]="true"></mat-divider>
+    <span>Rating range</span>
+    <mat-form-field floatLabel="never" class="ratingsAv">
+      <input [formControl]="ratingsAvgMin" matInput placeholder="" value="">
+    </mat-form-field>
+    <span class="rangeTo">to</span>
+    <mat-form-field floatLabel="never" class="ratingsAv">
+      <input [formControl]="ratingsAvgMax" matInput placeholder="" value="">
+    </mat-form-field>
+    <span class="spacer"></span>
+    <span>You have {{numberOfDriversLocal}} drivers</span>
+  </mat-toolbar>
+</div>

@@ -8,6 +8,7 @@ import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
   MatSidenavModule,
   MatListModule,
@@ -15,19 +16,24 @@ import {
   MatButtonModule,
   MatIconModule,
   MatProgressSpinnerModule,
-  MatTableModule
+  MatTableModule,
+  MatDividerModule,
+  MatSelectModule,
+  MatInputModule
 } from '@angular/material';
 import { HomeComponent } from './home/home.component';
 import { DriversTableListComponent } from './drivers-table-list/drivers-table-list.component';
 import { DriverComponent } from './driver/driver.component';
 import { DriversService } from './services/drivers.service';
+import { DriversTableFiltersComponent } from './drivers-table-filters/drivers-table-filters.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DriversTableListComponent,
     DriverComponent,
-    HomeComponent
+    HomeComponent,
+    DriversTableFiltersComponent
   ],
   imports: [
     BrowserModule,
@@ -42,10 +48,15 @@ import { DriversService } from './services/drivers.service';
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    MatTableModule
+    MatTableModule,
+    MatDividerModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule
   ],
   providers: [
-    DriversService
+    DriversService,
   ],
   bootstrap: [AppComponent]
 })

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {finalize, tap} from 'rxjs/operators';
-import { MatTableDataSource } from '@angular/material';
 import { DriversService } from '../services/drivers.service';
-import { Driver } from '../model/driver';
+import { DriversDatasource } from '../services/drivers.datasource';
 
 @Component({
   selector: 'app-drivers-table-list',
@@ -11,7 +9,7 @@ import { Driver } from '../model/driver';
 })
 export class DriversTableListComponent implements OnInit {
 
-  dataSource: MatTableDataSource<Driver>;
+  dataSource: DriversDatasource;
 
   loading = false;
 
@@ -21,12 +19,9 @@ export class DriversTableListComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.dataSource = new MatTableDataSource([]);
-    this.driversService.findAllDrivers()
-      .pipe(
-        finalize(() => this.loading = false)
-      )
-      .subscribe(drivers => this.dataSource.data = drivers);
+    this.dataSource = new DriversDatasource(this.driversService);
+    this.dataSource.loadDrivers();
+    this.dataSource.searchDrivers();
   }
 
 }
