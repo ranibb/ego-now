@@ -15,26 +15,15 @@ export class DriversDatasource implements DataSource<Driver> {
 
   constructor(private driversService: DriversService) { }
 
-  loadDrivers() {
-    this.loadingSubject.next(true);
-    this.driversService.findAllDrivers()
-    .pipe(
-      catchError(() => of([])),
-      finalize(() => this.loadingSubject.next(false))
-    )
-    .subscribe(drivers => {
-      this.driversSubject.next(drivers);
-    });
-  }
-
   searchDrivers() {
-    // this.loadingSubject.next(true);
+    this.loadingSubject.next(true);
     this.driversService.searchForDrivers()
     .pipe(
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false))
     )
     .subscribe(drivers => {
+      this.loadingSubject.next(false);
       this.driversSubject.next(drivers);
     });
   }

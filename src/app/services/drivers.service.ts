@@ -23,12 +23,6 @@ export class DriversService {
 
   constructor(private db: AngularFirestore) { }
 
-  findAllDrivers(): Observable<Driver[]> {
-    return this.db.collection('drivers')
-      .snapshotChanges()
-      .pipe(map(snaps => convertSnaps<Driver>(snaps)), first());
-  }
-
   // Query on the server-side and then on the client side due to limitation.
   searchForDrivers(): Observable<Driver[]> {
     this.ratingsAvgMin$.subscribe(ratingsAvgMin => this.ratingsAvgMin = ratingsAvgMin);

@@ -20,7 +20,6 @@ export class DriversTableListComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.dataSource = new DriversDatasource(this.driversService);
-    this.dataSource.loadDrivers();
     this.dataSource.searchDrivers();
   }
 
