@@ -12,7 +12,11 @@
 }
 
 mat-divider {
-  border-top-width: 1.5px;
+  border-top-width: 1px;
+}
+
+mat-toolbar {
+font-size: 14px;
 }
 
 mat-toolbar.filters {
@@ -24,16 +28,53 @@ mat-toolbar.refiners {
 }
 
 mat-divider.style-fix {
-  height: 36px;
-  margin-left: 8px;
-  margin-right: 8px;
+  height: 24px;
+  margin-left: 15px;
+  margin-right: 15px;
+  border-right-width: 1.5px;
+}
+
+.driver-status-mat-form {
+  width: 110px;
+}
+
+.ratings-av-title{
+  margin: 0 7px 0 5px;
 }
 
 .ratingsAv {
-  width: 30px;
+  width: 40px;
   text-align: center;
 }
 
+.ratingsAv .mat-input-element {
+  height: 27px;
+}
+
 .rangeTo {
-  margin: 0 5px;
+  margin: 0 7px;
+}
+
+.filters {
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+}
+
+.refiners {
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+
+::ng-deep .mat-form-field-underline {
+  display: none;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+  padding: 6px 0 0px 0;
+}
+
+.mat-input-element {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background-color: #FFF;
+  border-radius: 5px;
 }

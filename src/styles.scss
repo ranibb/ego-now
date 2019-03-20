@@ -45,3 +45,19 @@ $theme: mat-light-theme($primary, $accent);
 
 // Include all theme styles for the components.
 @include angular-material-theme($theme);
+
+.filters {
+  background-color: mat-color($primary, 'A700-contrast');
+}
+.refiners {
+  background-color: mat-color($primary, '100');
+}
+
+.mat-header-cell {
+  background-color: mat-color($mat-ego-now, 500);
+  color: mat-color($mat-ego-now, A100);
+}
+
+.mat-drawer-content {
+  background-color: mat-color($primary, 'A200');
+}

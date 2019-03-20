@@ -7,7 +7,7 @@
     <button mat-icon-button>
       <img src="../../assets/images/icons/assetSettingsButton.svg" alt="settings">
     </button>
-    <mat-form-field floatLabel="never">
+    <mat-form-field floatLabel="never" class="driver-status-mat-form">
       <mat-select placeholder="Driver status" [formControl]="driverStatus">
         <mat-option value="">Driver status</mat-option>
         <mat-option value="active">Active</mat-option>
@@ -17,7 +17,7 @@
       </mat-select>
     </mat-form-field>
     <mat-divider class="style-fix" [vertical]="true"></mat-divider>
-    <span>Rating range</span>
+    <span class="ratings-av-title">Rating range</span>
     <mat-form-field floatLabel="never" class="ratingsAv">
       <input [formControl]="ratingsAvgMin" matInput placeholder="" value="">
     </mat-form-field>

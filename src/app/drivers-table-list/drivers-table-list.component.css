@@ -5,6 +5,40 @@
 
 table {
   width: 100%;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+}
+
+.table-container {
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  padding: 20px 20px 0px 20px;
+  background-color: #fff
+}
+
+tr:nth-child(odd){
+  background: #f1f0f0;
+}
+
+td.mat-cell {
+  text-align: center;
+  border-bottom: 0;
+  border-right: 1px solid #dedcdc;
+}
+
+td.mat-cell:last-child {
+  border-right: 0;
+}
+
+th.mat-header-cell {
+  font-size: 14px;
+  text-align: center;
+}
+
+.mat-cell, .mat-footer-cell {
+  font-size: 12px;
+  font-weight: 500;
+  color: #002e5e
 }
 
 .spinner-container {
@@ -15,4 +49,25 @@ table {
 
 .spinner-container mat-spinner {
   margin: 130px auto 0 auto;
+}
+
+.mat-header-row {
+  height: 36px;
+}
+
+.mat-footer-row, .mat-row {
+  height: 36px;
+}
+
+mat-paginator {
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+
+.rounder {
+  border-radius: 7px;
+}
+
+.mat-paginator-page-size-select {
+  width: 34px;
 }

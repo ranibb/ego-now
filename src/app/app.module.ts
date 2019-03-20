@@ -19,7 +19,8 @@ import {
   MatTableModule,
   MatDividerModule,
   MatSelectModule,
-  MatInputModule
+  MatInputModule,
+  MatPaginatorModule
 } from '@angular/material';
 import { HomeComponent } from './home/home.component';
 import { DriversTableListComponent } from './drivers-table-list/drivers-table-list.component';
@@ -53,7 +54,8 @@ import { DriversTableFiltersComponent } from './drivers-table-filters/drivers-ta
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatPaginatorModule
   ],
   providers: [
     DriversService,
