@@ -61,3 +61,6 @@ $theme: mat-light-theme($primary, $accent);
 .mat-drawer-content {
   background-color: mat-color($primary, 'A200');
 }
+
+@import '~saturn-datepicker/theming';
+@include sat-datepicker-theme($theme);

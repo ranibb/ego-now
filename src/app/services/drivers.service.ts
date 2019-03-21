@@ -24,16 +24,26 @@ export class DriversService {
   pageIndex$ = new BehaviorSubject<number>(0);
   pageSize$ = new BehaviorSubject<number>(10);
 
+  dateRange$ = new Subject<any>();
+  dateRangeBegine: any;
+  dateRangeEnd: any;
+
   constructor(private db: AngularFirestore) { }
 
   // Query on the server-side and then on the client side due to limitation.
   searchForDrivers(): Observable<Driver[]> {
     this.ratingsAvgMin$.subscribe(ratingsAvgMin => this.ratingsAvgMin = ratingsAvgMin);
     this.ratingsAvgMax$.subscribe(ratingsAvgMax => this.ratingsAvgMax = ratingsAvgMax);
+    this.dateRange$.subscribe(dateRange => {
+      this.dateRangeBegine = new Date(dateRange.begin).toISOString();
+      this.dateRangeEnd = new Date(dateRange.end).toISOString();
+      console.log(this.dateRangeBegine);
+      console.log(this.dateRangeEnd);
+    });
 
-    return combineLatest(this.currentStatus$, this.ratingsAvgMin$, this.ratingsAvgMax$, this.pageIndex$, this.pageSize$)
+    return combineLatest(this.currentStatus$, this.ratingsAvgMin$, this.ratingsAvgMax$, this.pageIndex$, this.pageSize$, this.dateRange$)
       .pipe(
-        switchMap(([currentStatus, ratingsAvgMin, ratingsAvgMax, pageIndex, pageSize]) =>
+        switchMap(([currentStatus, ratingsAvgMin, ratingsAvgMax, pageIndex, pageSize, dateRange]) =>
           this.db.collection('drivers', ref =>
           // ref.where('currentStatus', '==', currentStatus).where('ratingsAvgMin', '>=', ratingsAvgMin) // another way to qoery the db
           // tslint:disable-next-line: one-line
@@ -51,6 +61,7 @@ export class DriversService {
         ),
         map(snaps => convertSnaps<Driver>(snaps)),
         map(drivers => drivers.filter(driver => driver.ratingsAvg >= this.ratingsAvgMin && driver.ratingsAvg <= this.ratingsAvgMax)),
+        map(drivers => drivers.filter(driver => driver.createdAt >= this.dateRangeBegine && driver.createdAt <= this.dateRangeEnd)),
         tap(drivers => this.numberOfDrivers$.next(drivers.length))
       );
   }

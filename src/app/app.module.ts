@@ -20,8 +20,13 @@ import {
   MatDividerModule,
   MatSelectModule,
   MatInputModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatDatepickerModule
 } from '@angular/material';
+import {  } from 'saturn-datepicker';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
+
 import { HomeComponent } from './home/home.component';
 import { DriversTableListComponent } from './drivers-table-list/drivers-table-list.component';
 import { DriverComponent } from './driver/driver.component';
@@ -55,7 +60,10 @@ import { DriversTableFiltersComponent } from './drivers-table-filters/drivers-ta
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDatepickerModule,
+    SatDatepickerModule,
+    SatNativeDateModule
   ],
   providers: [
     DriversService,

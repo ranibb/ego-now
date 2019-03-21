@@ -1,6 +1,6 @@
 <div class="basic-container">
   <mat-toolbar class="filters">
-    <span>Filters go here...</span>
+    <span>Dismissible filters go here...</span>
   </mat-toolbar>
   <mat-divider></mat-divider>
   <mat-toolbar class="refiners">
@@ -26,6 +26,12 @@
       <input [formControl]="ratingsAvgMax" matInput placeholder="" value="">
     </mat-form-field>
     <span class="spacer"></span>
+    <mat-form-field floatLabel="never"  class="date-range">
+      <input matInput placeholder="<<< click icon for date range" [satDatepicker]="picker" [formControl]="dateRange">
+      <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+      <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+    </mat-form-field>
+    <mat-divider class="style-fix" [vertical]="true"></mat-divider>
     <span>You have {{numberOfDriversLocal}} drivers</span>
   </mat-toolbar>
 </div>

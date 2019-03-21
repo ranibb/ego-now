@@ -51,6 +51,27 @@ mat-divider.style-fix {
   height: 27px;
 }
 
+.date-range .mat-input-element {
+  height: 27px;
+  margin-top: -7px;
+}
+
+.date-range {
+  padding-top: 5px;
+  width: 229px;
+  text-align: center;
+}
+
+sat-datepicker-toggle {
+  font-size: 1.4em;
+}
+
+::ng-deep .mat-form-field-suffix {
+  display: block;
+  position: fixed !important;
+  margin-top: 11px;
+}
+
 .rangeTo {
   margin: 0 7px;
 }
@@ -69,8 +90,8 @@ mat-divider.style-fix {
   display: none;
 }
 
-::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
-  padding: 6px 0 0px 0;
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+  padding-bottom: 10px;
 }
 
 .mat-input-element {
