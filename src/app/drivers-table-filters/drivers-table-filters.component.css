@@ -68,7 +68,7 @@ sat-datepicker-toggle {
 
 ::ng-deep .mat-form-field-suffix {
   display: block;
-  position: fixed !important;
+  position: absolute !important;
   margin-top: 11px;
 }
 

@@ -37,8 +37,6 @@ export class DriversService {
     this.dateRange$.subscribe(dateRange => {
       this.dateRangeBegine = new Date(dateRange.begin).toISOString();
       this.dateRangeEnd = new Date(dateRange.end).toISOString();
-      console.log(this.dateRangeBegine);
-      console.log(this.dateRangeEnd);
     });
 
     return combineLatest(this.currentStatus$, this.ratingsAvgMin$, this.ratingsAvgMax$, this.pageIndex$, this.pageSize$, this.dateRange$)
