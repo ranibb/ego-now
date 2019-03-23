@@ -19,11 +19,11 @@
     <mat-divider class="style-fix" [vertical]="true"></mat-divider>
     <span class="ratings-av-title">Rating range</span>
     <mat-form-field floatLabel="never" class="ratingsAv">
-      <input autocomplete="off" [formControl]="ratingsAvgMin" matInput placeholder="" value="">
+      <input autocomplete="off" [formControl]="ratingMin" matInput placeholder="" value="">
     </mat-form-field>
     <span class="rangeTo">to</span>
     <mat-form-field floatLabel="never" class="ratingsAv">
-      <input autocomplete="off" [formControl]="ratingsAvgMax" matInput placeholder="" value="">
+      <input autocomplete="off" [formControl]="ratingMax" matInput placeholder="" value="">
     </mat-form-field>
     <span class="spacer"></span>
     <mat-form-field floatLabel="never"  class="date-range">
@@ -32,6 +32,6 @@
       <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
     </mat-form-field>
     <mat-divider class="style-fix" [vertical]="true"></mat-divider>
-    <span>You have {{numberOfDriversLocal}} drivers</span>
+    <span>You have {{driversCount}} drivers</span>
   </mat-toolbar>
 </div>

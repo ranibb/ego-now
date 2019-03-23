@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
-import { DriversService } from '../services/drivers.service';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule } from 'saturn-datepicker';
-import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
-
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from 'saturn-datepicker';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import * as _moment from 'moment';
+
+import { DriversService } from '../services/drivers.service';
+import { DriversDatasource } from '../services/drivers.datasource';
+import { Rating } from '../model/interfaces';
 
 export const MY_FORMATS = {
   parse: {
@@ -30,60 +32,53 @@ export const MY_FORMATS = {
 })
 export class DriversTableFiltersComponent implements OnInit {
 
+  dataSource: DriversDatasource;
+
+  driversCount: number;
+
   public driverStatus: FormControl = new FormControl();
-  driverStatusLocal: string;
 
-  public ratingsAvgMin: FormControl = new FormControl();
-  ratingsAvgMinLocal: number;
-
-  public ratingsAvgMax: FormControl = new FormControl();
-  ratingsAvgMaxLocal: number;
-
-  numberOfDriversLocal: number;
+  public ratingMin: FormControl = new FormControl();
+  public ratingMax: FormControl = new FormControl();
+  rating: Rating = {min: 0, max: 5};
 
   public dateRange: FormControl = new FormControl();
-  dateRangeLocal = {
-    begin: new Date(2017, 7, 5),
-    end: new Date(2020, 7, 25)
-  };
 
   constructor(private driversService: DriversService) { }
 
   ngOnInit() {
-    this.driversService.currentStatus$.next('');
-    this.driversService.ratingsAvgMin$.next(0);
-    this.driversService.ratingsAvgMax$.next(5);
-    this.driversService.dateRange$.next(this.dateRangeLocal);
-    this.driversService.numberOfDrivers$.subscribe(numberOfDrivers => this.numberOfDriversLocal = numberOfDrivers);
+
+    this.dataSource = new DriversDatasource(this.driversService);
+
+    this.driversService.driversCount$.subscribe(driversCount => this.driversCount = driversCount);
 
     this.driverStatus.valueChanges
       .pipe(
         distinctUntilChanged(),
         tap(currentStatus => {
-          this.driverStatusLocal = currentStatus;
-          this.driversService.currentStatus$.next(this.driverStatusLocal);
+          this.driversService.currentStatus$.next(currentStatus);
           this.loadDriversPage();
         })
       )
       .subscribe();
 
-    this.ratingsAvgMin.valueChanges
+    this.ratingMin.valueChanges
       .pipe(
         distinctUntilChanged(),
-        tap(ratingsAvgMin => {
-          this.ratingsAvgMinLocal = ratingsAvgMin;
-          this.driversService.ratingsAvgMin$.next(this.ratingsAvgMinLocal);
+        tap(ratingMin => {
+          this.rating.min = ratingMin;
+          this.driversService.rating$.next(this.rating);
           this.loadDriversPage();
         })
       )
       .subscribe();
 
-    this.ratingsAvgMax.valueChanges
+    this.ratingMax.valueChanges
       .pipe(
         distinctUntilChanged(),
-        tap(ratingsAvgMax => {
-          this.ratingsAvgMaxLocal = ratingsAvgMax;
-          this.driversService.ratingsAvgMax$.next(this.ratingsAvgMaxLocal);
+        tap(ratingMax => {
+          this.rating.max = ratingMax;
+          this.driversService.rating$.next(this.rating);
           this.loadDriversPage();
         })
       )
@@ -93,8 +88,7 @@ export class DriversTableFiltersComponent implements OnInit {
       .pipe(
         distinctUntilChanged(),
         tap(dateRange => {
-          this.dateRangeLocal = dateRange;
-          this.driversService.dateRange$.next(this.dateRangeLocal);
+          this.driversService.dateRange$.next(dateRange);
           this.loadDriversPage();
         })
       )
@@ -102,7 +96,7 @@ export class DriversTableFiltersComponent implements OnInit {
   }
 
   loadDriversPage() {
-    this.driversService.searchForDrivers();
+    this.dataSource.searchDrivers();
   }
 
 }

@@ -1,6 +1,6 @@
 export interface Driver {
   id: number; // Mandatory
-  createdAt: Date; // Mandatory
+  createdAt: string; // Mandatory
   isBlocked?: boolean;
   acceptanceStatus?: 'accepted' | 'pending' | null;
   augmentedCurrentStatus?: 'active' | 'registration-vehicle' | 'on-duty-active' | null;
@@ -9,7 +9,7 @@ export interface Driver {
   lastDevice?: string;
   registrationDevice?: string;
   balance: number; // Mandatory
-  ratingsAvg: '5' | '4.5' | '4' | '3.5' | '3' | '2.5' | '2' | '1.5' | '1' | '0.5' | null; // Mandatory
+  ratingsAvg: number; // Mandatory
   email?: string;
   firstName: string; // Mandatory
   lastName: string; // Mandatory
