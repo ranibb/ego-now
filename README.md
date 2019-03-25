@@ -1,27 +1,29 @@
 # EgoNow
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.6.
+Angular Material Table with multiple filtters and datasource is a cloud firestore database
 
-## Development server
+**(Done)** The data table to show the following: Driver id – full name – phone number – account creation date – current status – Last driver vehicle balance – rating.
+**(Done)** Filters can be a drop down or range with a min and max fields.
+**(Done)** Driver status: a drop down of registration-vehicle / registration-uploads / registration-inspection / rejected / active / on-duty / on-ride /
+**(Done)** Rating: a range selector
+**(Done)** Filter the table using a date range (e.g. booking a flight ticket calendar filtration)
+**(Done)** UI design Implementation
+**(Todo)** Balance: a range selector
+**(Todo)** Dismiss-able badges
+**(Todo)** Pagination
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+The pagination would require some investigation on what is the best strategy to implement and how. As I have used firestore with this project, I could go with one of the following options:
 
-## Code scaffolding
+Option 1: Client side
+This is basically the approach you mentioned. Select all from a collection and count on the client side. This works well enough for small datasets but obviously doesn't work if the dataset is larger.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Option 2: Write-time best-effort
+With this approach, you can use Cloud Functions to update a counter for each addition and deletion from the collection.
+This works well for any dataset size, as long as additions/deletions only occur at the rate less than or equal to 1 per second. This gives you a single document to read to give you the most current count immediately.
+If need to exceed 1 per second, you need to implement distributed counters per our documentation.
 
-## Build
+Option 3: Write-time exact
+Rather than using Cloud Functions, in your client, you can update the counter at the same time as you add or delete a document. This means the counter will also be current, but you'll need to make sure to include this logic anywhere you add or delete documents.
+Like option 2, you'll need to implement distributed counters if you want to exceed per second
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Also, see this video: https://www.youtube.com/watch?v=poqTHxtDXwU
