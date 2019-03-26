@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, combineLatest, BehaviorSubject } from 'rxjs';
+import { Observable, combineLatest, BehaviorSubject, Subject } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import moment = require('moment');
 
@@ -14,18 +14,22 @@ import { DateRange, Rating } from '../model/interfaces';
 export class DriversService {
 
   currentStatus$ = new BehaviorSubject<string>('');
+  currentStatus: string;
 
-  rating$ = new BehaviorSubject<Rating>({min: 0, max: 5});
-  rating: Rating = {min: 0, max: 5};
+  rating$ = new BehaviorSubject<Rating>({ min: 0, max: 5 });
+  rating: Rating = { min: 0, max: 5 };
 
-  dateRange$ = new BehaviorSubject<DateRange>({begin: moment(2016).toISOString(), end: moment().toISOString()});
-  dateRange: DateRange = {begin: '', end: ''};
+  dateRange$ = new BehaviorSubject<DateRange>({ begin: moment(2016).toISOString(), end: moment().toISOString() });
+  dateRange: DateRange = { begin: '', end: '' };
 
-  driversCount$ = new BehaviorSubject<number>(10);
+  driversCount$ = new Subject<number>();
+  driversCount: number;
 
   pageIndex$ = new BehaviorSubject<number>(0);
 
   pageSize$ = new BehaviorSubject<number>(10);
+
+  latestDriver: string;
 
   constructor(private db: AngularFirestore) { }
 
@@ -39,29 +43,41 @@ export class DriversService {
       this.dateRange.begin = moment(dateRange.begin).toISOString();
       this.dateRange.end = moment(dateRange.end).toISOString();
     });
+    this.currentStatus$.subscribe(currentStatus => {
+      this.currentStatus = currentStatus;
+    });
 
-    return combineLatest(this.currentStatus$, this.rating$, this.dateRange$)
+    return combineLatest(this.currentStatus$, this.rating$, this.dateRange$, this.pageIndex$, this.pageSize$)
       .pipe(
-        switchMap(([currentStatus, ratings, dateRange]) =>
-          this.db.collection('drivers', ref =>
-          // ref.where('currentStatus', '==', currentStatus).where('ratingsAvgMin', '>=', ratingsAvgMin) // another way to qoery the db
-          // tslint:disable-next-line: one-line
-          {
+        switchMap(([currentStatus, ratings, dateRange, pageIndex, pageSize]) =>
+          this.db.collection('drivers', ref => {
             let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
-            if (currentStatus) { query = query.where('currentStatus', '==', currentStatus); }
-            /** combine multiple queries? didn't work .. perhaps in future ..
-             * if (ratingsAvgMin) {
-             *    query = query.where('ratingsAvg', '>=', ratingsAvgMin).where('ratingsAvg', '<=', ratingsAvgMax);
-             * }
-             */
+            query.get().then(values => this.driversCount$.next(values.docs.length));
+            query = query.orderBy('createdAt', 'desc');
+            if (!this.latestDriver) {
+              query = query.limit(pageSize);
+            }
+            if (this.latestDriver && (currentStatus || ratings || dateRange) && (pageIndex)) {
+              query = query.startAfter(this.latestDriver);
+              query = query.limit(pageSize);
+            }
+            if (currentStatus) {
+              query = query.where('currentStatus', '==', currentStatus);
+              query = query.limit(pageSize);
+            }
+            if (!currentStatus) {
+              query = query.limit(pageSize);
+            }
             return query;
-          }
-          ).snapshotChanges()
+          }).snapshotChanges()
         ),
         map(snaps => convertSnaps<Driver>(snaps)),
         map(drivers => drivers.filter(driver => driver.ratingsAvg >= this.rating.min && driver.ratingsAvg <= this.rating.max)),
         map(drivers => drivers.filter(driver => driver.createdAt >= this.dateRange.begin && driver.createdAt <= this.dateRange.end)),
-        tap(drivers => this.driversCount$.next(drivers.length))
+        tap(drivers => {
+          this.latestDriver = drivers[drivers.length - 1].createdAt;
+        })
+
       );
   }
 }
